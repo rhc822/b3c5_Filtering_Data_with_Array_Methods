@@ -111,43 +111,33 @@ const businesses = [
     }
   ];
 
-  const outEl = document.querySelector("#output")
-  outEl.innerHTML = "<h1>Active Businesses</h1>"
-  
-// Array to contain all the New York businesses
-  const newYorkBusinesses = businesses.filter(business => {
-    let inNewYork = false
+  const outEl = document.querySelector("#output")  
+  outEl.innerHTML += "<h1>Purchasing Agents</h1>";
 
-    if (business.addressStateCode === "NY") {
-      inNewYork = true
+  /*
+      Using map(), you extract the purchasing agent, company name, and phone number objects from each business and store it in a new array
+  */
+  const agents = businesses.map(business => {
+    let businessesFilter = {
+      "purchasingAgent": business.purchasingAgent,
+      "companyName": business.companyName,
+      "phoneNumber": business.phoneWork
     }
-
-  return inNewYork
+      return businessesFilter;
   })
+  
+/* 
 
-  // Array to contain all the manfacturing businesses
-const manufacturingBusinesses = businesses.filter(business => {
-  let individualManufacturingBusiness = false
+Go through each object in the new array, pull out the necessary stuff, put that stuff in string, and put that string on the DOM.
 
-  if (business.companyIndustry === "Manufacturing") {
-    individualManufacturingBusiness = true
-  }
+*/
 
-  return individualManufacturingBusiness
-
-})
-
-// Code that runs through each item in the provided list and puts info on DOM
-  manufacturingBusinesses.forEach(business => {
-    const zip = "addressZipCode";
+  agents.forEach(agent => {
     outEl.innerHTML += `
-      <h2>${business.companyName}</h2>
-      <section>
-        ${business.addressFullStreet}
-      </section>
-      <section>
-        ${business.addressCity}, ${business["addressStateCode"]} ${business[zip]}
-      </section>
-    `;
+      <h2>${agent.purchasingAgent.nameFirst} ${agent.purchasingAgent.nameLast}</h2>
+      <h3>${agent.companyName}</h3>
+      <h3>${agent.phoneNumber}</h3>
+      `;
     outEl.innerHTML += "<hr/>";
   });
+
