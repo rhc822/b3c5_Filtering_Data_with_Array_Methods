@@ -114,57 +114,59 @@ const businesses = [
   const outEl = document.querySelector("#output")  
   outEl.innerHTML = "<h1>Purchasing Agents</h1>";
 
-/*
 
-The following code executes when the user hits enter on their keyboard (charCode = 13). Upon execution, it takes the info entered into the search field, tests to see if the purchasing agent's first name of each object has that/those word/s (in that order and with that case)
+/* 
 
-*/
-
-document
-  .querySelector("#companySearch")
-  .addEventListener("keypress", keyPressEvent => {
-    if (keyPressEvent.charCode === 13) {
-      const foundPurchaseAgent = businesses.find(business => business.purchasingAgent.nameFirst.includes(keyPressEvent.target.value) || business.purchasingAgent.nameLast.includes(keyPressEvent.target.value)
-      );
-
-      outEl.innerHTML += `
-      <h2>
-      Company name: ${foundPurchaseAgent.companyName}
-      </h2>
-      <section>
-      Purchasing agent: ${foundPurchaseAgent.purchasingAgent.nameFirst} ${foundPurchaseAgent.purchasingAgent.nameLast}
-      </section>
-      `;
-    }
-  })
-
-
-
-/*
-
-Original find() code example: The following code executes when the user hits enter on their keyboard (charCode = 13). Upon execution, it takes the info entered into the search field, tests to see if the company name of each object has that/those word/s (in that order and with that case)
+Code below goes through each item in the businesses array and runs the reduce method, which adds together all orders for a given company (with a starting value of "0"). Then it puts that and other info to the DOM.
 
 */
 
-// document
-//   .querySelector("#companySearch")
-//   .addEventListener("keypress", keyPressEvent => {
-//     if (keyPressEvent.charCode === 13) {
-//       const foundBusiness = businesses.find(business =>
-//           business.companyName.includes(keyPressEvent.target.value)); //Backwards: .includes returns a boolean, which ".find" understands. If true, .find returns the VALUE, not the boolean.
-//         outEl.innerHTML += `
+//   businesses.forEach(business => {
+//     /* CALCULATE ORDER SUMMARY */
+//     let totalOrders = business.orders.reduce(
+//       (currentTotal, nextValue) => currentTotal += nextValue,
+//       0
+//   )
+
+
+//     outEl.innerHTML += `
 //         <h2>
-//         ${foundBusiness.companyName}
+//             ${business.companyName}
+//             ($${totalOrders})
 //         </h2>
 //         <section>
-//         ${foundBusiness.addressFullStreet}
+//             ${business.addressFullStreet}
 //         </section>
 //         <section>
-//         ${foundBusiness.addressCity},
-//         ${foundBusiness.addressStateCode}
-//         ${foundBusiness.addressZipCode}
+//             ${business.addressCity},
+//             ${business.addressStateCode}
+//             ${business.addressZipCode}
 //         </section>
-//         `
-//     }
-//   })
-  
+//     `;
+//     outEl.innerHTML += "<hr/>";
+// });
+
+
+/* 
+
+Lightning exercise 1
+
+*/
+
+const monthlyRainfall = [23, 13, 27, 20, 20, 31, 33, 26, 19, 12, 14, 12, 10]
+
+const totalRainfall = monthlyRainfall.reduce((accumulator, currentValue) => accumulator += currentValue)
+
+console.log(totalRainfall)
+
+/* 
+
+Lightning exercise 2
+
+*/
+
+const words = ["The", "quick", "brown", "fox", "jumped", "over", "the", "lazy", "dog"]
+
+const sentence = words.reduce((a, b) => a += ` ${b}`)
+
+console.log(sentence)
