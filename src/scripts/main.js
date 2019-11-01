@@ -112,32 +112,59 @@ const businesses = [
   ];
 
   const outEl = document.querySelector("#output")  
-  outEl.innerHTML += "<h1>Purchasing Agents</h1>";
+  outEl.innerHTML = "<h1>Purchasing Agents</h1>";
 
-  /*
-      Using map(), you extract the purchasing agent, company name, and phone number objects from each business and store it in a new array
-  */
-  const agents = businesses.map(business => {
-    let businessesFilter = {
-      "purchasingAgent": business.purchasingAgent,
-      "companyName": business.companyName,
-      "phoneNumber": business.phoneWork
-    }
-      return businessesFilter;
-  })
-  
-/* 
+/*
 
-Go through each object in the new array, pull out the necessary stuff, put that stuff in string, and put that string on the DOM.
+The following code executes when the user hits enter on their keyboard (charCode = 13). Upon execution, it takes the info entered into the search field, tests to see if the purchasing agent's first name of each object has that/those word/s (in that order and with that case)
 
 */
 
-  agents.forEach(agent => {
-    outEl.innerHTML += `
-      <h2>${agent.purchasingAgent.nameFirst} ${agent.purchasingAgent.nameLast}</h2>
-      <h3>${agent.companyName}</h3>
-      <h3>${agent.phoneNumber}</h3>
-      `;
-    outEl.innerHTML += "<hr/>";
-  });
+document
+  .querySelector("#companySearch")
+  .addEventListener("keypress", keyPressEvent => {
+    if (keyPressEvent.charCode === 13) {
+      const foundPurchaseAgent = businesses.find(business => business.purchasingAgent.nameFirst.includes(keyPressEvent.target.value) || business.purchasingAgent.nameLast.includes(keyPressEvent.target.value)
+      );
 
+      outEl.innerHTML += `
+      <h2>
+      Company name: ${foundPurchaseAgent.companyName}
+      </h2>
+      <section>
+      Purchasing agent: ${foundPurchaseAgent.purchasingAgent.nameFirst} ${foundPurchaseAgent.purchasingAgent.nameLast}
+      </section>
+      `;
+    }
+  })
+
+
+
+/*
+
+Original find() code example: The following code executes when the user hits enter on their keyboard (charCode = 13). Upon execution, it takes the info entered into the search field, tests to see if the company name of each object has that/those word/s (in that order and with that case)
+
+*/
+
+// document
+//   .querySelector("#companySearch")
+//   .addEventListener("keypress", keyPressEvent => {
+//     if (keyPressEvent.charCode === 13) {
+//       const foundBusiness = businesses.find(business =>
+//           business.companyName.includes(keyPressEvent.target.value)); //Backwards: .includes returns a boolean, which ".find" understands. If true, .find returns the VALUE, not the boolean.
+//         outEl.innerHTML += `
+//         <h2>
+//         ${foundBusiness.companyName}
+//         </h2>
+//         <section>
+//         ${foundBusiness.addressFullStreet}
+//         </section>
+//         <section>
+//         ${foundBusiness.addressCity},
+//         ${foundBusiness.addressStateCode}
+//         ${foundBusiness.addressZipCode}
+//         </section>
+//         `
+//     }
+//   })
+  
